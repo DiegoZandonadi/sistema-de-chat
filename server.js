@@ -30,20 +30,33 @@ const io = socketIo(server, {
 // Configuração do Redis
 let redisClient;
 let redisAvailable = false;
+let redisErrorLogged = false;
 
 try {
   redisClient = redis.createClient({
-    url: process.env.REDIS_URL || 'redis://localhost:6379'
+    url: process.env.REDIS_URL || 'redis://localhost:6379',
+    socket: {
+      reconnectStrategy: (retries) => {
+        if (retries > 3) {
+          return false; // Para de tentar reconectar após 3 tentativas
+        }
+        return Math.min(retries * 100, 3000);
+      }
+    }
   });
 
   redisClient.on('error', (err) => {
-    console.error('Erro no Redis:', err);
+    if (!redisErrorLogged) {
+      console.log('Redis não disponível - funcionando em modo memória');
+      redisErrorLogged = true;
+    }
     redisAvailable = false;
   });
 
   redisClient.on('connect', () => {
-    console.log('Conectado ao Redis');
+    console.log('✅ Conectado ao Redis');
     redisAvailable = true;
+    redisErrorLogged = false;
   });
 
   redisClient.connect().catch(() => {

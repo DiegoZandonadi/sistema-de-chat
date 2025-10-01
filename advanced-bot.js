@@ -29,6 +29,15 @@ class AdvancedChatBot {
           'Este sistema usa React no frontend e Express no backend.'
         ]
       },
+      vscode: {
+        keywords: ['vscode', 'visual studio code', 'editor', 'ide'],
+        responses: [
+          'O VS Code é um editor incrível! É desenvolvido pela Microsoft e é open source.',
+          'VS Code tem extensões fantásticas para desenvolvimento. Você usa alguma extensão favorita?',
+          'O Visual Studio Code é muito popular entre desenvolvedores. Eu mesmo "vivo" em um ambiente similar!',
+          'VS Code tem suporte nativo para JavaScript, TypeScript e muitas outras linguagens.'
+        ]
+      },
       weather: {
         keywords: ['clima', 'tempo', 'chuva', 'sol', 'frio', 'calor'],
         responses: [
@@ -173,6 +182,15 @@ class AdvancedChatBot {
     // Verificar pedidos de ajuda
     if (this.isHelpRequest(lowerMessage)) {
       return this.getRandomResponse(this.specialResponses.help);
+    }
+    
+    // Verificar perguntas específicas
+    if (lowerMessage.includes('como sabe')) {
+      return 'Eu tenho uma base de conhecimento pré-programada sobre tecnologia e programação! 🤖';
+    }
+    
+    if (lowerMessage.includes('vscode')) {
+      return this.getRandomResponse(this.knowledgeBase.vscode.responses);
     }
     
     // Verificar perguntas
