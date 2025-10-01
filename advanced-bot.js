@@ -101,7 +101,12 @@ class AdvancedChatBot {
       auth: {
         userId: this.botId,
         username: this.botName
-      }
+      },
+      transports: ['websocket', 'polling'],
+      timeout: 20000,
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000
     });
 
     this.socket.on('connect', () => {
@@ -115,6 +120,12 @@ class AdvancedChatBot {
       setTimeout(() => {
         this.sendMessage(`Olá pessoal! Sou o ${this.botName} e estou online! 🤖`);
       }, 2000);
+    });
+
+    this.socket.on('reconnect', () => {
+      console.log(`🤖 ${this.botName} reconectado!`);
+      this.isConnected = true;
+      this.socket.emit('joinPublicRoom');
     });
 
     this.socket.on('disconnect', () => {
