@@ -9,7 +9,7 @@
     "client": "cd client && npm start",
     "client-dev": "cd client && npm start",
     "server": "nodemon server.js",
-    "build": "node build.js",
+    "build": "cd client && npm install && npm run build",
     "install-client": "cd client && npm install",
     "install-server": "npm install",
     "install-all": "npm run install-server && npm run install-client",
