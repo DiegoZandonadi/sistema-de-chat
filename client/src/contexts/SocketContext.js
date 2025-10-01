@@ -23,7 +23,7 @@ export const SocketProvider = ({ children }) => {
         socket.disconnect();
       }
     };
-  }, []);
+  }, [socket]);
 
   const connectSocket = (userData) => {
     if (socket) {
