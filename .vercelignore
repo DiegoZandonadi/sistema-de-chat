@@ -1,0 +1,15 @@
+node_modules
+.git
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+server.js
+bot.js
+advanced-bot.js
+package.json
+package-lock.json
+README.md
+BOT_INSTRUCTIONS.md
